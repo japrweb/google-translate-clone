@@ -1,38 +1,40 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
+import { useReducer } from 'react'
+import { Action, type State } from './types'
 
 // 1. Create a initialState
-const initialState = {
-  fromLenguage: 'auto',
-  toLenguage: 'en',
+const initialState : State = {
+  fromLanguage: 'auto',
+  toLanguage: 'en',
   fromText: ' ',
   result: ' ',
   loading: false
 }
 
 // 2. Create a reducer 
-function reducer (state, action) {
-  const {type, payload} = action
+function reducer (state: State, action: Action) {
+  const { type } = action
 
-  if (type === 'INTERCHANGE_LENGUAGES') {
+  if (type === 'INTERCHANGE_LANGUAGES') {
     return {
       ...state,
-      fromLanguage: state.toLenguge,
-      toLenguage: state.fromLenguage
+      fromLanguage: state.toLanguage,
+      toLanguage: state.fromLanguage
     }
   }
 
-  if (type === 'SET_FROM_LENGUAGES') {
+  if (type === 'SET_FROM_LANGUAGE') {
     return {
       ...state,
-      fromLanguage: payload
+      fromLanguage: action.payload
     }
   }
 
-  if (type === 'SET_TO_LENGUAGES') { 
+  if (type === 'SET_TO_LANGUAGE') { 
     return {
       ...state,
-      toLenguage: payload
+      toLanguage: action.payload
     }
   }
 
@@ -40,7 +42,8 @@ function reducer (state, action) {
     return {
       ...state,
       loading: true, 
-      fromText: payload
+      fromText: action.payload,
+      result: ''
     }
   }
 
@@ -48,7 +51,7 @@ function reducer (state, action) {
     return {
       ...state,
       loading: false, 
-      result: payload
+      result: action.payload
     }
   }
 

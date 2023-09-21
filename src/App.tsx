@@ -1,34 +1,37 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-import { Container, Row, Col, Button, Form } from 'react-bootstrap'
+import { Container, Row, Col, Button, Form, Stack, FormText } from 'react-bootstrap'
 import './App.css'
 import { useStore } from './hooks/useStore'
 import { AUTO_LANGUAGE } from './constants'
 import { ArrowsIcon } from './components/Icons'
 import { LanguageSelector } from './components/LanguageSelector'
 import { SectionType } from './types.d'
+import { TextArea } from './components/TextArea'
 
 function App() {
 
-  const { toLanguage, fromLanguage, interchangeLanguages, setFromLanguage, setToLanguage } = useStore()
+  const { toLanguage, fromLanguage, fromText, result, interchangeLanguages, setFromLanguage, setToLanguage, setFromText, setResult } = useStore()
   
   return (
     <Container fluid>
-      <h1>Google Translate</h1>
+      <h2>Google Translate</h2>
 
       <Row>
         <Col>
+        <Stack gap={2}>
           <LanguageSelector
             type={SectionType.From}
             value={fromLanguage}
             onChange={setFromLanguage}
           />
-          <Form.Control
-            as='textarea'
+          <TextArea
             placeholder='Introducir texto'
-            autoFocus
-            style={{ height: '150px'}}
+            type={SectionType.From}
+            value={FormText}
+            onChange={setFromText}
           />
+          </Stack>
         </Col>
 
         <Col>
@@ -38,16 +41,20 @@ function App() {
         </Col>
 
         <Col>
+
+        <Stack gap={2}>
           <LanguageSelector 
             type={SectionType.To}
             value={toLanguage}
             onChange={setToLanguage}
           />
-          <Form.Control
-            as='textarea'
+          <TextArea
             placeholder='Traducción'
-            style={{ height: '150px'}}
+            type={SectionType.To}
+            value={result}
+            onChange={setResult}
           />
+        </Stack>
         </Col>
       </Row>
     </Container>

@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-import { Container, Row, Col, Button, Form, Stack, FormText } from 'react-bootstrap'
+import { Container, Row, Col, Button, Stack } from 'react-bootstrap'
 import './App.css'
 import { useStore } from './hooks/useStore'
 import { AUTO_LANGUAGE } from './constants'
@@ -11,7 +11,18 @@ import { TextArea } from './components/TextArea'
 
 function App() {
 
-  const { toLanguage, fromLanguage, fromText, result, interchangeLanguages, setFromLanguage, setToLanguage, setFromText, setResult } = useStore()
+  const { 
+    loading, 
+    toLanguage, 
+    fromLanguage, 
+    fromText, 
+    result, 
+    interchangeLanguages, 
+    setFromLanguage, 
+    setToLanguage, 
+    setFromText, 
+    setResult 
+  } = useStore()
   
   return (
     <Container fluid>
@@ -26,9 +37,8 @@ function App() {
             onChange={setFromLanguage}
           />
           <TextArea
-            placeholder='Introducir texto'
             type={SectionType.From}
-            value={FormText}
+            value={fromText}
             onChange={setFromText}
           />
           </Stack>
@@ -49,7 +59,7 @@ function App() {
             onChange={setToLanguage}
           />
           <TextArea
-            placeholder='Traducción'
+            loading={loading}
             type={SectionType.To}
             value={result}
             onChange={setResult}
